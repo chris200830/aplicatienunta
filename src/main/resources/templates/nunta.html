@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="ISO-8859-1" />
+<link href="../css/bootstrap.min.css" rel="stylesheet" />
+<!--[if lte IE 6]>
+		<script src="../js/html5shiv.min.js"></script>
+		<script src="../js/respond.min.js"></script>
+	<![endif]-->
+<title>Nunta</title>
+</head>
+<body>
+<h1 th:text="'Nunta: ' + ${nunta.mireasa} + ' si ' + ${nunta.mire}"></h1>
+	<p th:text="${nunta.mireasa}"></p>
+	
+		  <a th:href="@{${nunta.id} + '/invitati'}" class="btn btn-link">Lista invitatilor</a>  
+		  <a th:href="@{${nunta.id} + '/achizitii'}" class="btn btn-link">Lista achizitiilor</a>  
+	<script src="../js/jquery-1.11.1.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+</body>
+</html>

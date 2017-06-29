@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="ISO-8859-1" />
+<title>Adaugare nunta</title>
+<link href="css/bootstrap.min.css" rel="stylesheet" />
+<!--[if lte IE 6]>
+		<script src="../js/html5shiv.min.js"></script>
+		<script src="../js/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+	  <div th:include="fragments/header :: head"></div>
+	  <div th:if="${nunta} == null">
+	<h2 align="center">Adauga Nunta</h2>
+	<form th:action="@{/adauga-nunta}" method="POST" align="center" th:object="${nuntaFormular}">
+		<div class="form-group">
+			<label for="mireasa">Mireasa</label>
+			<p>
+				<input type="text" th:value="${nuntaFormular.mireasa}" name="mireasa" />
+			</p>
+		</div>
+		<div class="form-group">
+			<label for="mire">Mire</label>
+			<p>
+				<input type="text" th:value="${nuntaFormular.mire}"
+					name="mire" />
+			</p>
+		</div>
+		<div class="form-group">
+			<label for="numeLocal">Nume Local</label>
+			<p>
+				<input type="text" th:value="${nuntaFormular.numeLocal}" name="numeLocal" />
+			</p>
+		</div>
+		<div class="form-group">
+			<label for="judet">Judet</label>
+			<p>
+				<input type="text" th:value="${nuntaFormular.judet}" name="judet" />
+			</p>
+		</div>
+		<div class="form-group">
+			<label for="oras">Oras</label>
+			<p>
+				<input type="text" th:value="${nuntaFormular.oras}" name="oras" />
+			</p>
+		</div>
+				<p>Ziua nuntii
+			<select name="ziNunta">
+				<option th:each="zi : ${dati.days}" th:value="${zi}"
+					th:text="${zi}"></option>
+			</select>
+				Luna nuntii
+						<select name="lunaNunta">
+				<option th:each="luna : ${dati.months}" th:value="${luna}"
+					th:text="${luna}"></option>
+			</select>
+							Anul nuntii
+						<select name="anNunta">
+				<option th:each="an : ${dati.years}" th:value="${an}"
+					th:text="${an}"></option>
+			</select>
+			</p>
+		<p>
+			<button type="submit">Inregistreaza</button>
+		</p>
+	</form>
+	</div>
+	
+	<!-- MODIFICARE -->
+	<div th:if="${nunta}">
+	<h2 align="center">Modificare nunta</h2>
+		<form th:action="@{/modifica-nunta(idNunta=${nunta.id})}" method="POST" align="center" th:object="${nunta}">
+		<div class="form-group">
+			<label for="mireasa">Mireasa</label>
+			<p>
+				<input type="text" th:value="${nunta.mireasa}" name="mireasa" />
+			</p>
+		</div>
+		<div class="form-group">
+			<label for="mire">Mire</label>
+			<p>
+				<input type="text" th:value="${nunta.mire}"
+					name="mire" />
+			</p>
+		</div>
+		<div class="form-group">
+			<label for="numeLocal">Nume Local</label>
+			<p>
+				<input type="text" th:value="${nunta.numeLocal}" name="numeLocal" />
+			</p>
+		</div>
+		<div class="form-group">
+			<label for="judet">Judet</label>
+			<p>
+				<input type="text" th:value="${nunta.judet}" name="judet" />
+			</p>
+		</div>
+		<div class="form-group">
+			<label for="oras">Oras</label>
+			<p>
+				<input type="text" th:value="${nunta.oras}" name="oras" />
+			</p>
+		</div>
+				<p>Ziua nuntii
+			<select name="ziNunta">
+				<option th:each="zi : ${dati.days}" th:value="${zi}"
+					th:text="${zi}" th:selected="${zi} == ${ziAleasa}"></option>
+			</select>
+				Luna nuntii
+						<select name="lunaNunta">
+				<option th:each="luna : ${dati.months}" th:value="${luna}"
+					th:text="${luna}" th:selected="${luna} == ${lunaAleasa}"></option>
+			</select>
+							Anul nuntii
+						<select name="anNunta">
+				<option th:each="an : ${dati.years}" th:value="${an}"
+					th:text="${an}" th:selected="${an} == ${anAles}"></option>
+			</select>
+			</p>
+		<p>
+			<button type="submit">Modifica</button>
+		</p>
+	</form>
+	</div>
+	
+	 <div th:include="fragments/footer :: foot"></div>
+	<script src="../js/jquery-1.11.1.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+</body>
+</html>

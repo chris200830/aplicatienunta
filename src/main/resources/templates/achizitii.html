@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="ISO-8859-1" />
+<link href="../../css/bootstrap.min.css" rel="stylesheet" />
+<!--[if lte IE 6]>
+		<script src="../js/html5shiv.min.js"></script>
+		<script src="../js/respond.min.js"></script>
+	<![endif]-->
+<title>Aplicatie Nunta</title>
+</head>
+<body>
+	<div th:include="fragments/header :: head"></div>
+	<h1 align="center">Lista achizitiilor</h1>
+	<p align="right">
+		<a th:href="@{adauga-achizitie}" class="btn btn-info btn-lg"> <span
+			class="glyphicon glyphicon-plus"></span> Adauga
+		</a>
+	</p>
+
+	<div th:if="${!achizitii.isEmpty()}">
+
+		<div class="container">
+
+			<div class="dropdown">
+				<button class="btn btn-primary dropdown-toggle" type="button"
+					data-toggle="dropdown">
+					OrderBy <span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu">
+					<li><a
+						th:href="@{achizitii-orderBy(value=DenumireServiciuASC)}">DenumireServiciuASC</a></li>
+					<li><a
+						th:href="@{achizitii-orderBy(value=DenumireServiciuDESC)}">DenumireServiciuDESC</a></li>
+					<li><a th:href="@{achizitii-orderBy(value=NumeFurnizorASC)}">NumeFurnizorASC</a></li>
+					<li><a th:href="@{achizitii-orderBy(value=NumeFurnizorDESC)}">NumeFurnizorDESC</a></li>
+					<li><a th:href="@{achizitii-orderBy(value=DataAchizitieiASC)}">DataASC</a></li>
+					<li><a
+						th:href="@{achizitii-orderBy(value=DataAchizitieiDESC)}">DataDESC</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<div class="table-responsive">
+			<table class="table table-striped table-bordered text-left">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Denumire Serviciu</th>
+						<th>Nume Furnizor</th>
+						<th>Data Achizitiei</th>
+						<th>Avans</th>
+						<th>Rest</th>
+						<th>Total</th>
+						<th>Modifica</th>
+						<th>Sterge</th>
+					</tr>
+				</thead>
+				<tr th:each="achizitie : ${achizitii}">
+					<td th:text="${achizitie.id}"></td>
+					<td th:text="${achizitie.denumireServiciu}"></td>
+					<td th:text="${achizitie.numeFurnizor}"></td>
+					<td th:if="${achizitie.dataAchizitiei} == null" th:text="' - '"></td>
+					<td
+						th:if="${achizitie.dataAchizitiei} != null" th:text="${#calendars.day(achizitie.dataAchizitiei)} + '-' + ${#calendars.month(achizitie.dataAchizitiei)} + '-' + ${#calendars.year(achizitie.dataAchizitiei)}"></td>
+					<td th:text="${achizitie.cost.avans} + ' RON'"></td>
+					<td th:text="${achizitie.cost.rest} + ' RON'"></td>
+					<td th:text="${achizitie.cost.total} + ' RON'"></td>
+										<td align="center"><a
+						th:href="@{modifica-achizitie(idAchizitie=${achizitie.id}, pageId=${param.pageId})}">
+							<span class="glyphicon glyphicon-pencil"></span>
+					</a></td>
+					<td align="center"><a
+						th:href="@{sterge-achizitie(idAchizitie=${achizitie.id}, pageId=${param.pageId})}"> <span
+							class="glyphicon glyphicon-trash"></span></a></td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div th:if="${achizitii.isEmpty()}">
+		<h3 align="center">Lista e goala!</h3>
+	</div>
+	
+	<form th:action="@{incarca-achizitii(pageId=${param.pageId})}" method="POST" enctype="multipart/form-data">
+	<div class="container">
+	<div class="form-group">
+				<label for="achizitiiFile">Fisier</label>
+				
+					<input type="file" name="achizitiiFile" />
+			
+			</div>
+			<button type="submit">Incarca achizitii</button>
+			</div>
+	</form>
+	<div align="center">
+	<ul class="pagination" th:each="page : ${#numbers.sequence(1,pages)}">
+		  <li th:class="${T(Integer).parseInt(param.pageId) == page} ? 'active' : ''"><a th:href="@{achizitii(pageId=${page})}" th:text="${page}"></a></li>
+
+	</ul>
+	</div>
+	<div th:include="fragments/footer :: foot"></div>
+	<script src="../../js/jquery-1.11.1.min.js"></script>
+	<script src="../../js/bootstrap.min.js"></script>
+
+</body>
+</html>

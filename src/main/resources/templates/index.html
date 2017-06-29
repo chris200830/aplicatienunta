@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="ISO-8859-1" />
+
+<link href="../css/bootstrap.min.css" rel="stylesheet" />
+<!--[if lte IE 6]>
+		<script src="../js/html5shiv.min.js"></script>
+		<script src="../js/respond.min.js"></script>
+	<![endif]-->
+<title>Aplicatie Nunta</title>
+</head>
+<body>
+	  <div th:include="fragments/header :: head"></div>
+	<h1 align="center">Lista nuntilor</h1>
+
+	<p align="right">
+		<a href="/adauga-nunta" class="btn btn-info btn-lg"> <span
+			class="glyphicon glyphicon-plus"></span> Adauga
+		</a>
+	</p>
+
+	<div th:if="${!nunti.isEmpty()}">
+<p align="left" th:text="'Numar nunti: ' + ${nrNunti}"></p>        
+<div class="container">     
+	                 
+  <div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">OrderBy
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><a th:href="@{/orderBy(value=MireasaASC)}">MireasaASC</a></li>
+     <li><a th:href="@{/orderBy(value=MireasaDESC)}">MireasaDESC</a></li>
+     <li><a th:href="@{/orderBy(value=MireASC)}">MireASC</a></li>
+     <li><a th:href="@{/orderBy(value=MireDESC)}">MireaDESC</a></li>
+     <li><a th:href="@{/orderBy(value=LocalASC)}">LocalASC</a></li>
+     <li><a th:href="@{/orderBy(value=LocalDESC)}">LocalDESC</a></li>
+     <li><a th:href="@{/orderBy(value=JudetASC)}">JudetASC</a></li>
+     <li><a th:href="@{/orderBy(value=JudetDESC)}">JudetDESC</a></li>
+     <li><a th:href="@{/orderBy(value=OrasASC)}">OrasASC</a></li>
+     <li><a th:href="@{/orderBy(value=OrasDESC)}">OrasDESC</a></li>
+     <li><a th:href="@{/orderBy(value=nrInvitatiASC)}">NrInvitatiASC</a></li>
+     <li><a th:href="@{/orderBy(value=NrInvitatiDESC)}">NrInvitatiDESC</a></li>
+     <li><a th:href="@{/orderBy(value=NrPersoanePrezenteASC)}">NrPersoanePrezenteASC</a></li>
+     <li><a th:href="@{/orderBy(value=NrPersoanePrezenteDESC)}">NrPersoanePrezenteDESC</a></li>
+     <li><a th:href="@{/orderBy(value=CostTotalASC)}">CostTotalASC</a></li>
+     <li><a th:href="@{/orderBy(value=CostTotalDESC)}">CostTotalDESC</a></li>
+     <li><a th:href="@{/orderBy(value=DataNuntiiASC)}">DataNuntiiASC</a></li>
+     <li><a th:href="@{/orderBy(value=DataNuntiiDESC)}">DataNuntiiDESC</a></li>
+    </ul>
+  </div>
+</div>
+		<div class="table-responsive">
+			<table class="table table-striped table-bordered table-hover text-left" id="mytable">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Mireasa</th>
+						<th>Mire</th>
+						<th>Local</th>
+						<th>Judet</th>
+						<th>Oras</th>
+						<th>Nr. Invitati</th>
+						<th>Nr. persoane prezente</th>
+						<th>Cost total</th>
+						<th>Bani din daruri</th>
+						<th>Data Nuntii</th>
+						<th>Lista invitatilor</th>
+						<th>Lista achizitiilor</th>
+						<th>Modifica</th>
+						<th>Sterge</th>
+					</tr>
+				</thead>
+				<tbody>
+				<tr th:each="nunta : ${nunti}">
+					<td th:text="${nunta.id}"></td>
+					<td th:text="${nunta.mireasa}"></td>
+					<td th:text="${nunta.mire}"></td>
+					<td th:text="${nunta.numeLocal}"></td>
+					<td th:text="${nunta.judet}"></td>
+					<td th:text="${nunta.oras}"></td>
+					<td th:text="${nunta.nrInvitati}"></td>
+					<td th:text="${nunta.nrPersoanePrezente}"></td>
+					<td th:text="${nunta.costTotal} + ' RON'"></td>
+					<td th:text="${nunta.baniDaruri} + ' RON'"></td>
+					<td
+						th:text="${#calendars.day(nunta.dataNuntii)} + '-' + ${#calendars.month(nunta.dataNuntii)} + '-' + ${#calendars.year(nunta.dataNuntii)}"></td>
+					<td><a th:href="@{'/nunta/' + ${nunta.id} + '/invitati?pageId=1'}">Invitati</a></td>
+					<td><a th:href="@{'/nunta/' + ${nunta.id} + '/achizitii?pageId=1'}">Achizitii</a></td>
+						<td align="center"><a th:href="@{modifica-nunta(idNunta=${nunta.id})}"> <span
+							class="glyphicon glyphicon-pencil"></span>
+					</a></td>
+										<td align="center"><a
+						th:href="@{sterge-nunta(idNunta=${nunta.id})}"><span
+							class="glyphicon glyphicon-trash"></span></a></td>
+				</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div th:if="${nunti.isEmpty()}">
+		<h3 align="center">Lista e goala!</h3>
+	</div>
+	
+	  <div th:include="fragments/footer :: foot"></div>
+
+	<script src="../js/jquery-1.11.1.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+</body>
+</html>

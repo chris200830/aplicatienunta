@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="ISO-8859-1" />
+<title>Adaugare achizitie</title>
+<link href="../../css/bootstrap.min.css" rel="stylesheet" />
+<!--[if lte IE 6]>
+		<script src="../js/html5shiv.min.js"></script>
+		<script src="../js/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>	  
+<div th:include="fragments/header :: head"></div>
+
+<div th:if="${achizitie} == null">
+	<form th:action="@{adauga-achizitie}" method="POST" align="center">
+		<div class="form-group">
+			<label for="denumireServiciu">Denumire serviciu</label>
+			<p>
+				<input type="text" th:value="${achizitieFormular.denumireServiciu}"
+					name="denumireServiciu" />
+			</p>
+		</div>
+		<div class="form-group">
+			<label for="numeFurnizor">Nume Furnizor</label>
+			<p>
+				<input type="text" th:value="${achizitieFormular.numeFurnizor}"
+					name="numeFurnizor" />
+			</p>
+		</div>
+					<p>Ziua achizitiei
+			<select name="zi">
+				<option th:each="zi : ${dati.days}" th:value="${zi}"
+					th:text="${zi}"></option>
+			</select>
+				Luna achizitiei
+						<select name="luna">
+				<option th:each="luna : ${dati.months}" th:value="${luna}"
+					th:text="${luna}"></option>
+			</select>
+							Anul achizitiei
+						<select name="an">
+				<option th:each="an : ${dati.years}" th:value="${an}"
+					th:text="${an}"></option>
+			</select>
+			</p>
+				<div class="form-group">
+			<label for="avans">Avans</label>
+			<p>
+				<input type="text" name="avans" />
+			</p>
+		</div>
+				<div class="form-group">
+			<label for="rest">Rest</label>
+			<p>
+				<input type="text" name="rest" />
+			</p>
+		</div>
+		<p>
+			<button type="submit">Inregistreaza</button>
+		</p>
+	</form>
+	</div>
+	
+	<!-- MODIFICARE -->
+	<div th:if="${achizitie} != null">
+		<form th:action="@{modifica-achizitie(idAchizitie=${achizitie.id}, pageId=${pageId})}" method="POST" align="center" th:object="${achizitie}">
+		<div class="form-group">
+			<label for="denumireServiciu">Denumire serviciu</label>
+			<p>
+				<input type="text" th:value="${achizitie.denumireServiciu}"
+					name="denumireServiciu" />
+			</p>
+		</div>
+		<div class="form-group">
+			<label for="numeFurnizor">Nume Furnizor</label>
+			<p>
+				<input type="text" th:value="${achizitie.numeFurnizor}"
+					name="numeFurnizor" />
+			</p>
+		</div>
+					<p>Ziua achizitiei
+			<select name="zi">
+				<option th:each="zi : ${dati.days}" th:value="${zi}"
+					th:text="${zi}" th:selected="${zi} == ${ziAleasa}" />
+			</select>
+				Luna achizitiei
+						<select name="luna">
+				<option th:each="luna : ${dati.months}" th:value="${luna}"
+					th:text="${luna}" th:selected="${luna} == ${lunaAleasa}"/>
+			</select>
+							Anul achizitiei
+						<select name="an">
+				<option th:each="an : ${dati.years}" th:value="${an}"
+					th:text="${an}" th:selected="${an} == ${anAles}" />
+			</select>
+			</p>
+				<div class="form-group">
+			<label for="avans">Avans</label>
+			<p>
+				<input type="text" th:value="${cost.avans}" name="avans" />
+			</p>
+		</div>
+				<div class="form-group">
+			<label for="rest">Rest</label>
+			<p>
+				<input type="text" th:value="${cost.rest}" name="rest" />
+			</p>
+		</div>
+		<p>
+			<button type="submit">Modifica</button>
+		</p>
+	</form>
+	</div>
+	
+	 <div th:include="fragments/footer :: foot"></div>
+	<script src="../js/jquery-1.11.1.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+	xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="ISO-8859-1" />
+<title>Adaugare invitat</title>
+<link href="../../css/bootstrap.min.css" rel="stylesheet" />
+<!--[if lte IE 6]>
+		<script src="../js/html5shiv.min.js"></script>
+		<script src="../js/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+	  <div th:include="fragments/header :: head"></div>
+<div class="container">
+	
+	<!-- MODIFICARE -->
+	<div th:if="${invitat} != null">
+	<form class="form-horizontal" th:action="@{modifica-invitat(idInvitat=${invitat.id}, pageId=${pageId})}" method="POST" th:object="${invitat}">
+
+		<div class="form-group">
+			<label for="nume">Nume: </label>
+				<input type="text" th:value="${invitat.nume}" name="nume" />
+
+
+			<label for="prenume">Prenume: </label> <input type="text"
+				th:value="${invitat.prenume}" name="prenume" />
+		
+				<p>
+				<label
+				for="confirmarePrezenta">Confirmare prezenta: </label>
+				<input type="checkbox"
+					th:checked="${invitat.confirmarePrezenta}"
+					name="confirmarePrezenta" />
+			</p>
+<p>
+			<label for="dar">Dar: </label>
+			
+				<input type="text" th:value="${invitat.dar}"
+					name="dar" />
+			
+			<label for="bani">Bani: </label>
+			<input type="text" th:value="${invitat.bani}" name="bani" />
+			
+			<label for="tipValuta">Valuta: </label>
+			<select name="tipValuta">
+				<option th:value="RON" th:text="'RON'" th:selected="${#strings.equals(invitat.tipValuta, 'RON')}"/>
+				<option th:value="EUR" th:text="'EUR'" th:selected="${#strings.equals(invitat.tipValuta, 'EUR')}"/>
+				<option th:value="USD" th:text="'USD'" th:selected="${#strings.equals(invitat.tipValuta, 'USD')}"/>
+				<option th:value="GBP" th:text="'GBP'" th:selected="${#strings.equals(invitat.tipValuta, 'GBP')}"/>
+			</select>
+			</p>
+
+<p>
+			<label for="detalii">Detalii: </label>
+			
+				<input type="text" th:value="${invitat.detalii}"
+					name="detalii" />
+			</p>
+
+
+<p>
+			<label for="judet">Judet: </label> <input type="text"
+				th:value="${invitat.judet}" name="judet" /> <label
+				for="oras">Oras: </label> <input type="text"
+				th:value="${invitat.oras}" name="oras" /></p> <p><label
+				for="nrMasa">Nr. Masa: </label>
+						<select name="nrMasa">
+				<option th:each="masa : ${mese}" th:value="${masa.nrMasa}"
+					th:text="${masa.nrMasa}" th:selected="${masa.nrMasa} == ${masaAleasa}"></option>
+			</select>
+			</p>
+		</div>
+		<div class="form-group">
+			<p> <label for="numeHotel">Nume Hotel</label>
+			
+				<input type="text" th:value="${cazare.numeHotel}"
+					name="numeHotel" />
+
+			<label for="tipCamera">Tip Camera</label>
+			
+			<select name="tipCamera">
+				<option value="Single" th:selected="${#strings.equals(cazare.tipCamera, 'Single')}">Single</option>
+				<option value="Double" th:selected="${#strings.equals(cazare.tipCamera, 'Double')}">Double</option>
+			</select>
+			</p>
+			<p>
+				Data cazarii (zi/luna/an): <select name="ziInitiala">
+					<option th:each="zi : ${dati.days}" th:value="${zi}"
+						th:text="${zi}" th:selected="${zi} == ${zIAleasa}"></option>
+				</select>  <select name="lunaInitiala">
+					<option th:each="luna : ${dati.months}" th:value="${luna}"
+						th:text="${luna}" th:selected="${luna} == ${lIAleasa}"></option>
+				</select> <select name="anInitial">
+					<option th:each="an : ${dati.years}" th:value="${an}"
+						th:text="${an}" th:selected="${an} == ${aIAles}"></option>
+				</select>
+			</p>
+			<p>
+				Data plecarii (zi/luna/an): <select name="ziFinala">
+					<option th:each="zi : ${dati.days}" th:value="${zi}"
+						th:text="${zi}" th:selected="${zi} == ${zFAleasa}"></option>
+				</select>  <select name="lunaFinala">
+					<option th:each="luna : ${dati.months}" th:value="${luna}"
+						th:text="${luna}" th:selected="${luna} == ${lFAleasa}"></option>
+				</select>  <select name="anFinal">
+					<option th:each="an : ${dati.years}" th:value="${an}"
+						th:text="${an}" th:selected="${an} == ${aFAles}"></option>
+				</select>
+			</p>
+		</div>
+		<p>
+			<button type="submit">Inregistreaza</button>
+		</p>
+	</form>
+	</div>
+	<!-- TERMINARE MODIFICARE -->
+	
+	<!-- ADAUGARE -->
+	<div th:if="${invitat} == null">
+	<h2 align="center">Adauga Invitat</h2>
+	<form class="form-horizontal" th:action="@{adauga-invitat}" method="POST">
+
+		<div class="form-group">
+			<label for="nume">Nume: </label>
+				<input type="text" th:value="${invitatFormular.nume}" name="nume" />
+
+
+			<label for="prenume">Prenume: </label> <input type="text"
+				th:value="${invitatFormular.prenume}" name="prenume" />
+		
+				<p>
+				<label
+				for="confirmarePrezenta">Confirmare prezenta: </label>
+				<input type="checkbox"
+					th:checked="${invitatFormular.confirmarePrezenta}"
+					name="confirmarePrezenta" />
+			</p>
+<p>
+			<label for="dar">Dar: </label>
+			
+				<input type="text" th:value="${invitatFormular.dar}"
+					name="dar" />
+						<label for="bani">Bani: </label>
+			<input type="text" th:value="${invitatFormular.bani}" name="bani" />
+			
+			<label for="tipValuta">Valuta: </label>
+			<select name="tipValuta">
+				<option th:value="RON" th:text="'RON'" />
+				<option th:value="EUR" th:text="'EUR'" />
+				<option th:value="USD" th:text="'USD'" />
+				<option th:value="GBP" th:text="'GBP'" />
+			</select>
+			</p>
+
+<p>
+			<label for="detalii">Detalii: </label>
+			
+				<input type="text" th:value="${invitatFormular.detalii}"
+					name="detalii" />
+			</p>
+
+
+<p>
+			<label for="judet">Judet: </label> <input type="text"
+				th:value="${invitatFormular.judet}" name="judet" /> <label
+				for="oras">Oras: </label> <input type="text"
+				th:value="${invitatFormular.oras}" name="oras" /></p> <p><label
+				for="nrMasa">Nr. Masa: </label>
+						<select name="nrMasa">
+				<option th:each="masa : ${mese}" th:value="${masa.nrMasa}"
+					th:text="${masa.nrMasa}"></option>
+			</select>
+			</p>
+		</div>
+		<div class="form-group">
+			<p> <label for="numeHotel">Nume Hotel</label>
+			
+				<input type="text" th:value="${cazareFormular.numeHotel}"
+					name="numeHotel" />
+
+			<label for="tipCamera">Tip Camera</label>
+			
+			<select name="tipCamera">
+				<option value="Single">Single</option>
+				<option value="Double">Double</option>
+			</select>
+			</p>
+			<p>
+				Data cazarii (zi/luna/an): <select name="ziInitiala">
+					<option th:each="zi : ${dati.days}" th:value="${zi}"
+						th:text="${zi}"></option>
+				</select>  <select name="lunaInitiala">
+					<option th:each="luna : ${dati.months}" th:value="${luna}"
+						th:text="${luna}"></option>
+				</select> <select name="anInitial">
+					<option th:each="an : ${dati.years}" th:value="${an}"
+						th:text="${an}"></option>
+				</select>
+			</p>
+			<p>
+				Data plecarii (zi/luna/an): <select name="ziFinala">
+					<option th:each="zi : ${dati.days}" th:value="${zi}"
+						th:text="${zi}"></option>
+				</select>  <select name="lunaFinala">
+					<option th:each="luna : ${dati.months}" th:value="${luna}"
+						th:text="${luna}"></option>
+				</select>  <select name="anFinal">
+					<option th:each="an : ${dati.years}" th:value="${an}"
+						th:text="${an}"></option>
+				</select>
+			</p>
+		</div>
+		<p>
+			<button type="submit">Inregistreaza</button>
+		</p>
+	</form>
+	</div>
+		<!-- TERMINARE ADAUGARE -->
+	</div>
+	 <div th:include="fragments/footer :: foot"></div>
+	<script src="../js/jquery-1.11.1.min.js"></script>
+	<script src="../js/bootstrap.min.js"></script>
+</body>
+</html>
